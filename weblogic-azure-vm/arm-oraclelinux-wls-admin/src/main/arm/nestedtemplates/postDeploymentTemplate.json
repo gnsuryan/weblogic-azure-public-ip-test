@@ -81,7 +81,7 @@
 				"timeout": "PT30M",
 				"cleanupPreference": "OnSuccess",
 				"retentionInterval": "P1D",
-				"scriptContent": "az --version",
+				"scriptContent": "az account show",
 				"environmentVariables": [
 					{
 					    "name": "MANAGED_IDENTITY_ID",
