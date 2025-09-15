@@ -420,7 +420,7 @@
 	  {
 	     "apiVersion": "${azure.apiVersionForPublicIPAddresses}",
 	     "type": "Microsoft.Network/publicIPAddresses",
-	     "tags": "[union(parameters('tagsByResource')['${identifier.publicIPAddresses}'],'test'))]",
+	     "tags": "[union(string(parameters('tagsByResource')['${identifier.publicIPAddresses}']),'test'))]",
 		 "condition": "[equals(parameters('virtualNetworkNewOrExisting'), 'existing')]",
 	     "name": "[variables('name_publicIPAddress')]",
 	     "location": "[parameters('location')]",
