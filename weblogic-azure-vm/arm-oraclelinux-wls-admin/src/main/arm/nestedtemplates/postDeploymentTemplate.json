@@ -1,0 +1,86 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+		"_globalResourceNameSuffix": {
+		   "type": "string",
+		   "metadata": {
+		      "description": "A unique suffix that was specified during the deployment of the solution template."
+		   }
+		},
+		"tagsByResource": {
+		    "type": "object",
+		    "defaultValue": {},
+		    "metadata": {
+		        "description": "${label.tagsLabel}"
+		    }
+		},
+		"utcValue": {
+		    "type": "string",
+		    "defaultValue": "[utcNow()]"
+		},
+		"adminVMName": {
+		   "type": "string",
+		   "defaultValue": "adminVM",
+		   "metadata": {
+		      "description": "Admin Server hosting VM name."
+		   }
+		}
+    },
+    "variables": {
+		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+		"name_roleAssignmentName": "[guid(format('{0}{1}Role assignment in resource group scope', subscription().id, parameters('utcValue')))]",
+		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-itentity', parameters('_globalResourceNameSuffix'))]",
+		"name_scriptFile": "postDeployment.sh",
+    },
+    "resources": [
+		{
+		    "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+		    "apiVersion": "${azure.apiVersionForIdentity}",
+		    "tags": "[parameters('tagsByResource')['${identifier.userAssignedIdentities}']]",
+		    "name": "[variables('name_postDeploymentScriptUserDefinedManagedIdentity')]",
+		    "location": "[parameters('location')]"
+		},
+		{
+		    "type": "Microsoft.Authorization/roleAssignments",
+		    "apiVersion": "${azure.apiVersionForRoleAssignment}",
+		    "name": "[variables('name_roleAssignmentName')]",
+		    "dependsOn": [
+		        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]"
+		    ],
+		    "properties": {
+		        "description": "Assign subscription scope role to User Assigned Managed Identity ",
+		        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('name_postDeploymentScriptUserDefinedManagedIdentity'))).principalId]",
+		        "principalType": "ServicePrincipal",
+		        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('const_roleDefinitionIdOfContributor'))]"
+		    }
+		},
+		{
+		    "type": "Microsoft.Resources/deploymentScripts",
+		    "apiVersion": "2020-10-01",
+		    "name": "[concat(parameters('adminVMName'),'/postdeployscript')]",
+			"kind": "AzureCLI",
+			"location": "[parameters('location')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Compute/virtualMachines', parameters('adminVMName'))]"
+			],
+			"identity": {
+			    "type": "UserAssigned",
+			    "userAssignedIdentities": {
+			        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]": {}
+			    }
+			},
+			"properties": {
+				"forceUpdateTag": "[parameters('utcValue')]",
+				"azCliVersion": "2.40.0",
+				"timeout": "PT30M",
+				"cleanupPreference": "OnSuccess",
+				"retentionInterval": "P1D",
+				"scriptContent": "echo Executing Azure CLI",
+				"environmentVariables": []
+			}
+		}
+    ],
+    "outputs": {
+    }
+}

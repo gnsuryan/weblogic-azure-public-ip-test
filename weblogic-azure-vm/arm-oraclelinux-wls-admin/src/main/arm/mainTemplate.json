@@ -374,6 +374,7 @@
       "name_adminVM": "[concat(parameters('adminVMName'), variables('const_globalResourceNameSuffix'))]",
       "name_dbLinkedTemplate": "dbTemplate.json",
       "name_dnszonesLinkedTemplateName": "dnszonesTemplate.json",
+	  "name_postDeploymentTemplate": "postDeploymentTemplate.json", 
       "name_networkSecurityGroup": "[concat(parameters('dnsLabelPrefix'), '-nsg', variables('const_globalResourceNameSuffix'))]",
       "name_nsgLinkedTemplateName": "nsgNestedTemplate.json",
       // If adding a new resource, add the resource identifier to the array below
@@ -807,7 +808,29 @@
 
             }
          }
-      },     
+      },
+	  {
+	  	"type": "Microsoft.Resources/deployments",
+	  	"apiVersion": "${azure.apiVersionForDeployment}",
+	  	"name": "postDeplyment",
+	  	"tags": "[variables('obj_tagsByResources')['${identifier.resourcesDeployment}']]",
+	  	"properties": {
+	  		"mode": "Incremental",
+	  		"templateLink": {
+	  			"uri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/', variables('name_postDeploymentTemplate')))]",
+	  			"contentVersion": "1.0.0.0"
+	  		},
+	  		"parameters": {
+	  			"_globalResourceNameSuffix": {
+	  				"value": "[variables('const_globalResourceNameSuffix')]"
+	  			},
+	  			"tagsByResource": {
+	  				"value": "[variables('obj_tagsByResources')]"
+	  			},
+				"adminVMName": {
+				   "value": "[variables('name_adminVM')]"
+				}				
+	  },	       
       {
          "type": "Microsoft.Resources/deployments",
          "apiVersion": "${azure.apiVersionForDeployment}",
