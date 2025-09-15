@@ -426,7 +426,7 @@
 	  {
 	     "apiVersion": "${azure.apiVersionForPublicIPAddresses}",
 	     "type": "Microsoft.Network/publicIPAddresses",
-	     "tags": "[concat(parameters('tagsByResource')[parameters('identifierPublicIPAddresses')], parameters('const_guidTag')]",
+	     "tags": "[union(parameters('tagsByResource')[parameters('identifierPublicIPAddresses')], object({parameters('const_guidTag'):''}]",
 		 "condition": "[equals(parameters('virtualNetworkNewOrExisting'), 'existing')]",
 	     "name": "[variables('name_publicIPAddress')]",
 	     "location": "[parameters('location')]",
