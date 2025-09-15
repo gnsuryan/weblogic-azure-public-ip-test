@@ -31,8 +31,13 @@
 		    "metadata": {
 		        "description": "${label.tagsLabel}"
 		    }
+		},
+		"const_guidTag" :{
+			"type": "string",
+			"metadata": {
+			   "description": "A unique tag for resources."
+			}
 		}
-		
     },
     "variables": {
 		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
@@ -90,6 +95,10 @@
 					{
 					    "name": "RESOURCE_GROUP_NAME",
 					    "value": "[resourceGroup().name]"
+					},
+					{
+						"name": "GUID_TAG",
+						"value": "[parameters('const_guidTag')]"
 					}
 				]
 			}

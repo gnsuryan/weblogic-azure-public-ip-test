@@ -27,6 +27,12 @@
             "description": "A unique suffix that was specified during the deployment of the solution template."
          }
       },
+	  "const_guidTag" :{
+	  	"type": "string",
+	  	"metadata": {
+	  	   "description": "A unique tag for resources."
+	  	}
+	  },
       "adminPasswordOrKey": {
          "type": "securestring",
          "metadata": {
@@ -267,7 +273,8 @@
       "name_customHostnameGeneratorscriptFile": "generateCustomHostNameVerifier.sh",
       "name_customHostnameVerifierJavaFile": "src/main/java/WebLogicCustomHostNameVerifier.java",
       "name_customHostnameValuesTemplate": "src/main/java/HostNameValuesTemplate.txt",
-      "name_customHostnameVerifierTest" : "src/test/java/WebLogicCustomHostNameVerifierTest.java"
+      "name_customHostnameVerifierTest" : "src/test/java/WebLogicCustomHostNameVerifierTest.java",
+	  "const_guidTag" :
    },
    "resources": [
       {
@@ -420,7 +427,7 @@
 	  {
 	     "apiVersion": "${azure.apiVersionForPublicIPAddresses}",
 	     "type": "Microsoft.Network/publicIPAddresses",
-	     "tags": "[union(parameters('tagsByResource')[parameters('identifierPublicIPAddresses')], json(concat('{\"', parameters('guidValue'), '\": \"\"}')))]",
+	     "tags": "[concat(parameters('tagsByResource')[parameters('identifierPublicIPAddresses')], parameters('const_guidTag')]",
 		 "condition": "[equals(parameters('virtualNetworkNewOrExisting'), 'existing')]",
 	     "name": "[variables('name_publicIPAddress')]",
 	     "location": "[parameters('location')]",

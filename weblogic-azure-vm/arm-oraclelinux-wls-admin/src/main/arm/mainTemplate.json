@@ -177,6 +177,10 @@
          "type": "string",
          "defaultValue": "[newGuid()]"
       },
+	  "guidTag": {
+	     "type": "string",
+	     "defaultValue": "[newGuid()]"
+	  },
       "location": {
          "type": "string",
          "defaultValue": "[resourceGroup().location]",
@@ -368,6 +372,7 @@
    },
    "variables": {
       "const_globalResourceNameSuffix": "[uniqueString(parameters('guidValue'))]",
+	  "const_guidTag": "[uniqueString(parameters('guidTag'))]",
       "name_adminCustomSSLLinkedTemplateName": "adminTemplateForCustomSSL.json",
       "name_adminLinkedTemplateDeployment": "[concat('admin',if(parameters('enableCustomSSL'),'CustomSSL',''),'LinkedTemplate')]",
       "name_adminLinkedTemplateName": "adminTemplate.json",
@@ -457,6 +462,9 @@
                "_globalResourceNameSuffix": {
                   "value": "[variables('const_globalResourceNameSuffix')]"
                },
+			   "const_guidTag":{
+					"value": "[variables('const_guidTag')]"
+			   },
                "adminPasswordOrKey": {
                   "value": "[parameters('adminPasswordOrKey')]"
                },
@@ -557,6 +565,9 @@
                "_globalResourceNameSuffix": {
                   "value": "[variables('const_globalResourceNameSuffix')]"
                },
+			   "const_guidTag":{
+			   	"value": "[variables('const_guidTag')]"
+			   },
                "adminPasswordOrKey": {
                   "value": "[parameters('adminPasswordOrKey')]"
                },
@@ -838,6 +849,9 @@
 	  			},
 				"adminVMName": {
 				   "value": "[variables('name_adminVM')]"
+				},
+				"const_guidTag":{
+					"value": "[variables('const_guidTag')]"
 				}
 			}
 		}				
