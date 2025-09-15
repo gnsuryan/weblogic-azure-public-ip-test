@@ -273,8 +273,7 @@
       "name_customHostnameGeneratorscriptFile": "generateCustomHostNameVerifier.sh",
       "name_customHostnameVerifierJavaFile": "src/main/java/WebLogicCustomHostNameVerifier.java",
       "name_customHostnameValuesTemplate": "src/main/java/HostNameValuesTemplate.txt",
-      "name_customHostnameVerifierTest" : "src/test/java/WebLogicCustomHostNameVerifierTest.java",
-	  "const_guidTag" :
+      "name_customHostnameVerifierTest" : "src/test/java/WebLogicCustomHostNameVerifierTest.java"
    },
    "resources": [
       {
