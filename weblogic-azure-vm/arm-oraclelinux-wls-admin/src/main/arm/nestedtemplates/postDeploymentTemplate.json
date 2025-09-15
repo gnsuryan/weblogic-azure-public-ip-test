@@ -14,13 +14,6 @@
 		      "description": "A unique suffix that was specified during the deployment of the solution template."
 		   }
 		},
-		"tagsByResource": {
-		    "type": "object",
-		    "defaultValue": {},
-		    "metadata": {
-		        "description": "${label.tagsLabel}"
-		    }
-		},
 		"utcValue": {
 		    "type": "string",
 		    "defaultValue": "[utcNow()]"
@@ -31,7 +24,15 @@
 		   "metadata": {
 		      "description": "Admin Server hosting VM name."
 		   }
+		},
+		"tagsByResource": {
+		    "type": "object",
+		    "defaultValue": {},
+		    "metadata": {
+		        "description": "${label.tagsLabel}"
+		    }
 		}
+		
     },
     "variables": {
 		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
@@ -63,8 +64,9 @@
 		},
 		{
 		    "type": "Microsoft.Resources/deploymentScripts",
-		    "apiVersion": "${azure.apiVersionForDeployment}",
-		    "name": "[concat(parameters('adminVMName'),'/postdeployscript')]",
+		    "apiVersion": "${azure.apiVersionForDeploymentScript}",
+			"tags": "[parameters('tagsByResource')['${identifier.deploymentScripts}']]",
+			"name": "[concat('postdeployscript-', parameters('_globalResourceNameSuffix'))]",
 			"kind": "AzureCLI",
 			"location": "[parameters('location')]",
 			"identity": {
@@ -79,8 +81,17 @@
 				"timeout": "PT30M",
 				"cleanupPreference": "OnSuccess",
 				"retentionInterval": "P1D",
-				"scriptContent": "echo Executing Azure CLI",
-				"environmentVariables": []
+				"scriptContent": "az --version",
+				"environmentVariables": [
+					{
+					    "name": "MANAGED_IDENTITY_ID",
+					    "value": "[variables('name_postDeploymentScriptUserDefinedManagedIdentity')]"
+					},
+					{
+					    "name": "RESOURCE_GROUP_NAME",
+					    "value": "[resourceGroup().name]"
+					}
+				]
 			}
 		}
     ],
