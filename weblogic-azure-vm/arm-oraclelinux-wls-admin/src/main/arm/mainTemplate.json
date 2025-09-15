@@ -836,7 +836,8 @@
 				"adminVMName": {
 				   "value": "[variables('name_adminVM')]"
 				}
-			}				
+			}
+		}				
 	  },	       
       {
          "type": "Microsoft.Resources/deployments",
