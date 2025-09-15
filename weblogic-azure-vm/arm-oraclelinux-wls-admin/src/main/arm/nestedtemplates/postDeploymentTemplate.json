@@ -67,9 +67,6 @@
 		    "name": "[concat(parameters('adminVMName'),'/postdeployscript')]",
 			"kind": "AzureCLI",
 			"location": "[parameters('location')]",
-			"dependsOn": [
-				"[resourceId('Microsoft.Compute/virtualMachines', parameters('adminVMName'))]"
-			],
 			"identity": {
 			    "type": "UserAssigned",
 			    "userAssignedIdentities": {
