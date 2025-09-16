@@ -109,6 +109,7 @@
 				"cleanupPreference": "OnSuccess",
 				"retentionInterval": "P1D",
 				"primaryScriptUri": "[uri(parameters('_artifactsLocationAdminTemplate'), concat('../scripts/', variables('name_postDeploymentscriptFile'), parameters('_artifactsLocationSasToken')))]",
+				"arguments": "[concat("<<<",'\"',resourceGroup().name',' ',parameters('const_guidTag'),' ',variables('name_postDeploymentScriptUserDefinedManagedIdentity'),'\"')]",
 				"environmentVariables": [
 					{
 					    "name": "MANAGED_IDENTITY_ID",
