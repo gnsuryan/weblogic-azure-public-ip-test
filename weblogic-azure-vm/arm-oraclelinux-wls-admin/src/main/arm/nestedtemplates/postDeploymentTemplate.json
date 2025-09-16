@@ -42,7 +42,7 @@
     "variables": {
 		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
 		"name_roleAssignmentName": "[guid(format('{0}{1}Role assignment in resource group scope', subscription().id, parameters('utcValue')))]",
-		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-itentity', parameters('_globalResourceNameSuffix'))]",
+		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-identity', parameters('_globalResourceNameSuffix'))]",
 		"name_scriptFile": "postDeployment.sh"
     },
     "resources": [
@@ -72,6 +72,9 @@
 		    "apiVersion": "${azure.apiVersionForDeploymentScript}",
 			"tags": "[parameters('tagsByResource')['${identifier.deploymentScripts}']]",
 			"name": "[concat('postdeployscript-', parameters('_globalResourceNameSuffix'))]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Authorization/roleAssignments', variables('name_roleAssignmentName'))]"
+			 ],
 			"kind": "AzureCLI",
 			"location": "[parameters('location')]",
 			"identity": {
