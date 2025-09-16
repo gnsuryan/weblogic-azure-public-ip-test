@@ -104,7 +104,7 @@
 			},
 			"properties": {
 				"forceUpdateTag": "[parameters('utcValue')]",
-				"azCliVersion": "2.40.0",
+				"azCliVersion": "2.77.0",
 				"timeout": "PT30M",
 				"cleanupPreference": "OnSuccess",
 				"retentionInterval": "P1D",

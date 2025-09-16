@@ -42,5 +42,5 @@ if [ -n "${PUBLIC_IPS}" ]; then
 else
 	echo "No public IPs found with tag ${GUID_TAG}"
 fi
-
+echo "Deleting $MANAGED_IDENTITY_ID	"
 az identity delete --name $MANAGED_IDENTITY_ID --resource-group ${RESOURCE_GROUP_NAME}
