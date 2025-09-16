@@ -502,6 +502,10 @@
          "condition": "[equals(parameters('virtualNetworkNewOrExisting'), 'existing')]",
          "name": "[variables('name_nic_without_pub_ip')]",
          "location": "[parameters('location')]",
+		 "dependsOn": [
+		    "[resourceId('Microsoft.Network/publicIPAddresses/', variables('name_publicIPAddress'))]",
+		    "[resourceId('Microsoft.Network/virtualNetworks/', variables('name_virtualNetwork'))]"
+		 ],
          "properties": {
             "ipConfigurations": [
                {
