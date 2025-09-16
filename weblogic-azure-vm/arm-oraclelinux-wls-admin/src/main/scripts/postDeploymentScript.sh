@@ -11,10 +11,10 @@ function echo_stderr ()
 #Function to display usage message
 function usage()
 {
-  echo_stderr "./postDeploymentScript.sh <<< \"<wlsDomainSetupArgsFromStdIn>\""
+  echo_stderr "./postDeploymentScript.sh "
 }
 
-read resourceGroup resourceGUIDTag managedIdentity
+
 
 echo "Executing post Deployment script"
 
@@ -23,7 +23,7 @@ echo "Executing post Deployment script"
 # 2) Remove the public IP from netwrok interface
 # 3) Finally delete all public IPs    
 
-PUBLIC_IPS="$(az network public-ip list --resource-group ${resourceGroup} --query "[?tags && contains(keys(tags), '${resourceGUIDTag}')].id" -o tsv)"
+PUBLIC_IPS="$(az network public-ip list --resource-group ${RESOURCE_GROUP_NAME} --query "[?tags && contains(keys(tags), '${GUID_TAG}')].id" -o tsv)"
 if [ -n "${PUBLIC_IPS}" ]; then
 	echo "Found public IPs to remove: ${PUBLIC_IPS}"
 	for PUBLIC_IP in ${PUBLIC_IPS}; do
@@ -34,13 +34,13 @@ if [ -n "${PUBLIC_IPS}" ]; then
 		 	NIC_NAME=$(echo "${IP_CONFIG_ID}" | sed 's|.*/networkInterfaces/\([^/]*\)/.*|\1|')
 		 	IP_CONFIG_NAME=$(echo "${IP_CONFIG_ID}" | sed 's|.*/ipConfigurations/\([^/]*\).*|\1|')
 		 	echo "Removing public IP from NIC: ${NIC_NAME}, IP config: ${IP_CONFIG_NAME}"
-		 	az network nic ip-config update -g "${resourceGroup}" --nic-name "${NIC_NAME}" -n "${IP_CONFIG_NAME}" --remove publicIPAddress
+		 	az network nic ip-config update -g "${RESOURCE_GROUP_NAME}" --nic-name "${NIC_NAME}" -n "${IP_CONFIG_NAME}" --remove publicIPAddress
 		 fi
 	done
 	echo "Deleting public IPs: ${PUBLIC_IPS}"
 	az network public-ip delete --ids ${PUBLIC_IPS}
 else
-	echo "No public IPs found with tag ${resourceGUIDTag}"
+	echo "No public IPs found with tag ${GUID_TAG}"
 fi
 
-az identity delete --name $managedIdentity --resource-group ${resourceGroup}
+az identity delete --name $MANAGED_IDENTITY_ID --resource-group ${RESOURCE_GROUP_NAME}
