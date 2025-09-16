@@ -344,7 +344,7 @@
       },
       "tagsByResource": {
          "type": "object",
-         "defaultValue": "{outbound:ip}",
+         "defaultValue": { },
          "metadata": {
             "description": "${label.tagsLabel}"
          }
