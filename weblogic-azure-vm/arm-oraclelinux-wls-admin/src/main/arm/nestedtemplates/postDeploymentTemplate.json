@@ -59,7 +59,7 @@
 		}
     },
     "variables": {
-		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+		"const_roleDefinitionIdOfContributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
 		"name_roleAssignmentName": "[guid(format('{0}{1}Role assignment in resource group scope', subscription().id, parameters('utcValue')))]",
 		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-identity', parameters('_globalResourceNameSuffix'))]",
 		"name_postDeploymentscriptFile": "postDeploymentScript.sh"
@@ -76,6 +76,7 @@
 		    "type": "Microsoft.Authorization/roleAssignments",
 		    "apiVersion": "${azure.apiVersionForRoleAssignment}",
 		    "name": "[variables('name_roleAssignmentName')]",
+			"scope": "[subscription().id]",
 		    "dependsOn": [
 		        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]"
 		    ],
@@ -83,7 +84,7 @@
 		        "description": "Assign subscription scope role to User Assigned Managed Identity ",
 		        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('name_postDeploymentScriptUserDefinedManagedIdentity'))).principalId]",
 		        "principalType": "ServicePrincipal",
-		        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('const_roleDefinitionIdOfContributor'))]"
+		        "roleDefinitionId": "[variables('const_roleDefinitionIdOfContributor')]"
 		    }
 		},
 		{
