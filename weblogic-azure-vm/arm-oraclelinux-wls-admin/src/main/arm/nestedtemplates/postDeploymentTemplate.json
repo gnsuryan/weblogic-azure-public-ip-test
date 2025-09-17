@@ -79,6 +79,7 @@
 		    "dependsOn": [
 		        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]"
 		    ],
+			"subscriptionId": "[subscription().subscriptionId]",
 		    "properties": {
 		        "description": "Assign subscription scope role to User Assigned Managed Identity ",
 		        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('name_postDeploymentScriptUserDefinedManagedIdentity'))).principalId]",
