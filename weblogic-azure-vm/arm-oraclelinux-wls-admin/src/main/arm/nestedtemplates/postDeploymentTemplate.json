@@ -76,7 +76,6 @@
 		    "type": "Microsoft.Authorization/roleAssignments",
 		    "apiVersion": "${azure.apiVersionForRoleAssignment}",
 		    "name": "[variables('name_roleAssignmentName')]",
-			"scope": "[subscription().id]",
 		    "dependsOn": [
 		        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]"
 		    ],
