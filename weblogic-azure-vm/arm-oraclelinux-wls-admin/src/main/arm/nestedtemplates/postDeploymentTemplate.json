@@ -70,7 +70,8 @@
 		    "apiVersion": "${azure.apiVersionForIdentity}",
 		    "tags": "[parameters('tagsByResource')['${identifier.userAssignedIdentities}']]",
 		    "name": "[variables('name_postDeploymentScriptUserDefinedManagedIdentity')]",
-		    "location": "[parameters('location')]"
+		    "location": "[parameters('location')]",
+			"scope": "[subscription().id]"
 		},
 		{
 		    "type": "Microsoft.Authorization/roleAssignments",
