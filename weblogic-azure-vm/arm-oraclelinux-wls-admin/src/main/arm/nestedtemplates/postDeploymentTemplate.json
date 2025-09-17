@@ -67,7 +67,7 @@
     "resources": [
 		{
 		    "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
-		    "apiVersion": "${azure.apiVersionForIdentity}",
+		    "apiVersion": "2024-11-30",
 		    "tags": "[parameters('tagsByResource')['${identifier.userAssignedIdentities}']]",
 		    "name": "[variables('name_postDeploymentScriptUserDefinedManagedIdentity')]",
 		    "location": "[parameters('location')]",
