@@ -831,7 +831,6 @@
 		   "[resourceId('Microsoft.Resources/deployments', 'dnszonesLinkedTemplate')]",
 		   "[resourceId('Microsoft.Resources/deployments', 'dbLinkedTemplate')]"
 		],		
-		"subscriptionId": "[subscription().subscriptionId]",
 	  	"properties": {
 	  		"mode": "Incremental",
 	  		"templateLink": {
