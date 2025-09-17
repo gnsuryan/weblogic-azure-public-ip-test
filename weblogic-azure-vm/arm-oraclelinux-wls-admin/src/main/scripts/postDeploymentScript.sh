@@ -34,13 +34,11 @@ if [ -n "${PUBLIC_IPS}" ]; then
 		 	NIC_NAME=$(echo "${IP_CONFIG_ID}" | sed 's|.*/networkInterfaces/\([^/]*\)/.*|\1|')
 		 	IP_CONFIG_NAME=$(echo "${IP_CONFIG_ID}" | sed 's|.*/ipConfigurations/\([^/]*\).*|\1|')
 		 	echo "Removing public IP from NIC: ${NIC_NAME}, IP config: ${IP_CONFIG_NAME}"
-		 	output="$(az network nic ip-config update -g "${RESOURCE_GROUP_NAME}" --nic-name "${NIC_NAME}" -n "${IP_CONFIG_NAME}" --remove publicIPAddress)"
-		 	echo $output
+		 	az network nic ip-config update -g "${RESOURCE_GROUP_NAME}" --nic-name "${NIC_NAME}" -n "${IP_CONFIG_NAME}" --remove publicIPAddress
 		 fi
 	done
 	echo "Deleting public IPs: ${PUBLIC_IPS}"
-	output="$(az network public-ip delete --ids ${PUBLIC_IPS})"
-	echo $output
+	az network public-ip delete --ids ${PUBLIC_IPS}
 else
 	echo "No public IPs found with tag ${GUID_TAG}"
 fi

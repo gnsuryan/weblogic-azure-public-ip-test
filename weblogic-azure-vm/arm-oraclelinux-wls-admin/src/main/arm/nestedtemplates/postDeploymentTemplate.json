@@ -83,7 +83,8 @@
 		        "description": "Assign subscription scope role to User Assigned Managed Identity ",
 		        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('name_postDeploymentScriptUserDefinedManagedIdentity'))).principalId]",
 		        "principalType": "ServicePrincipal",
-		        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('const_roleDefinitionIdOfContributor'))]"
+		        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('const_roleDefinitionIdOfContributor'))]",
+				"scope": "[subscription().id]"
 		    }
 		},
 		{
