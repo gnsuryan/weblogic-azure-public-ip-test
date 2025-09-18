@@ -76,7 +76,6 @@
 		    "type": "Microsoft.Authorization/roleAssignments",
 		    "apiVersion": "${azure.apiVersionForRoleAssignment}",
 		    "name": "[variables('name_roleAssignmentName')]",
-			"scope": "[subscription().id]",
 		    "dependsOn": [
 		        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]"
 		    ],
@@ -84,7 +83,8 @@
 		        "description": "Assign subscription scope role to User Assigned Managed Identity ",
 		        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('name_postDeploymentScriptUserDefinedManagedIdentity'))).principalId]",
 				"principalType": "ServicePrincipal",
-		        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('const_roleDefinitionIdOfContributor'))]"
+		        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('const_roleDefinitionIdOfContributor'))]",
+				"scope": "[resourceGroup().id]"
 		    }
 		},
 		{
