@@ -13,13 +13,17 @@
 		     "metadata": {
 		        "description": "Roledefinition ID"
 		     }
+		  },
+		  "guidRoleValue": {
+		     "type": "string",
+		     "defaultValue": "[newGuid()]"
 		  }
  	 },
 	 "resources": [
 		{
 		    "type": "Microsoft.Authorization/roleAssignments",
 		    "apiVersion": "${azure.apiVersionForRoleAssignment}",
-		    "name": "[newGuid()]",
+		    "name": "[parameters('guidRoleValue')]",
 		    "properties": {
 		        "description": "Assign subscription scope role to User Assigned Managed Identity ",
 		        "principalId": "[parameters('principalId')]",
