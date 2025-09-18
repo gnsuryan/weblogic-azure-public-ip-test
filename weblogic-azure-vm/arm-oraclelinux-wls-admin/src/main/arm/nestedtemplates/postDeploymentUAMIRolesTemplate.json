@@ -26,11 +26,18 @@
 		      "metadata": {
 		         "description": "${label.tagsLabel}"
 		      }
+		   },
+		   "roleAssignmentNameSeed": {
+		       "type": "string",
+		       "defaultValue": "roleassignment",
+		       "metadata": {
+		           "description": "A unique string used to generate the role assignment name. Defaults to a unique GUID based on the deployment context."
+		       }
 		   }		   
 	},
 	"variables": {
 		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
-		"roleAssignmentNameSeed" :"[concat('roleassignment' , variables('const_roleDefinitionIdOfContributor'))]",
+		
 		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-identity', parameters('_globalResourceNameSuffix'))]",
 		"name_postDeploymentScriptRoleAssignment": "[concat('post-deployment-user-defined-role-assignment', parameters('_globalResourceNameSuffix'))]",
 		"name_postDeploymentScriptRoleAssignmentTemplate": "postDeploymentRoleAssignmentTemplate.json"
@@ -53,6 +60,9 @@
 			],
 			"properties": {
 			    "mode": "Incremental",
+				"expressionEvaluationOptions": {
+					"scope": "inner"
+				 },
 			    "template": {
 			        "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
 			        "contentVersion": "1.0.0.0",
@@ -65,7 +75,6 @@
 			            },
 						"innerRoleAssignmentNameSeed": {
 							"type": "string",
-							"defaultValue": "roleassign"
 						}						
 					},
 					"variables": {
@@ -78,7 +87,8 @@
 			                "name": "[variables('roleAssignmentGuid')]",
 			                "properties": {
 			                    "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', parameters('innerRoleDefinitionId'))]",
-			                    "principalId": "[parameters('innerPrincipalId')]"
+			                    "principalId": "[parameters('innerPrincipalId')]".
+								"principalType": "ServicePrincipal"
 			                }
 			            }
 			        ]
@@ -89,7 +99,10 @@
 			        },
 			        "innerRoleDefinitionId": {
 			            "value": "[variables('const_roleDefinitionIdOfContributor')]"
-			        }				
+			        },
+					"innerRoleAssignmentNameSeed": {
+						"value": "[parameters('roleAssignmentNameSeed')]"
+					}				
 			    }
 			}		
 		}
@@ -97,7 +110,7 @@
 	"outputs": {
 		"uamidForPostDeployment": {
 		         "type": "string",
-		         "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity')).id]"
+		         "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]"
 		 }
 	}
 }
