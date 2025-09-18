@@ -14,17 +14,6 @@
 		      "description": "A unique suffix that was specified during the deployment of the solution template."
 		   }
 		},
-		"utcValue": {
-		    "type": "string",
-		    "defaultValue": "[utcNow()]"
-		},
-		"adminVMName": {
-		   "type": "string",
-		   "defaultValue": "adminVM",
-		   "metadata": {
-		      "description": "Admin Server hosting VM name."
-		   }
-		},
 		"tagsByResource": {
 		    "type": "object",
 		    "defaultValue": {},
@@ -56,37 +45,19 @@
 		   "metadata": {
 		      "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
 		   }
+		},
+		"identity":{
+			"type": "object",
+			"metadata": { 
+				"Description": "UserAssigned Identity"
+			}
 		}
     },
     "variables": {
-		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
-		"name_roleAssignmentName": "[guid(format('{0}{1}Role assignment in resource group scope', subscription().id, parameters('utcValue')))]",
 		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-identity', parameters('_globalResourceNameSuffix'))]",
 		"name_postDeploymentscriptFile": "postDeploymentScript.sh"
     },
     "resources": [
-		{
-		    "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
-		    "apiVersion": "${azure.apiVersionForIdentity}",
-		    "tags": "[parameters('tagsByResource')['${identifier.userAssignedIdentities}']]",
-		    "name": "[variables('name_postDeploymentScriptUserDefinedManagedIdentity')]",
-		    "location": "[parameters('location')]",
-		},
-		{
-		    "type": "Microsoft.Authorization/roleAssignments",
-		    "apiVersion": "${azure.apiVersionForRoleAssignment}",
-		    "name": "[variables('name_roleAssignmentName')]",
-		    "dependsOn": [
-		        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]"
-		    ],
-		    "properties": {
-		        "description": "Assign subscription scope role to User Assigned Managed Identity ",
-		        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('name_postDeploymentScriptUserDefinedManagedIdentity'))).principalId]",
-				"principalType": "ServicePrincipal",
-		        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('const_roleDefinitionIdOfContributor'))]",
-				"scope": "subscription()"
-		    }
-		},
 		{
 		    "type": "Microsoft.Resources/deploymentScripts",
 		    "apiVersion": "${azure.apiVersionForDeploymentScript}",
@@ -97,12 +68,7 @@
 			 ],
 			"kind": "AzureCLI",
 			"location": "[parameters('location')]",
-			"identity": {
-			    "type": "UserAssigned",
-			    "userAssignedIdentities": {
-			        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]": {}
-			    }
-			},
+			"identity": "[parameters('identity')]",
 			"properties": {
 				"forceUpdateTag": "[parameters('utcValue')]",
 				"azCliVersion": "2.9.1",

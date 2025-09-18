@@ -1,0 +1,66 @@
+{
+   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+   "contentVersion": "1.0.0.0",
+   "parameters": {
+		"location": {
+		   "type": "string",
+		   "metadata": {
+		      "description": "Location for all resources."
+		   },
+		   "_globalResourceNameSuffix": {
+		      "type": "string",
+		      "metadata": {
+		         "description": "A unique suffix that was specified during the deployment of the solution template."
+		      },
+			  "_artifactsLocation": {
+			     "type": "string",
+			     "metadata": {
+			        "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
+			     }
+			  }
+		   }
+		}
+	},
+	"variables": {
+		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-identity', parameters('_globalResourceNameSuffix'))]",
+		"name_postDeploymentScriptRoleAssignment": "[concat('post-deployment-user-defined-role-assignment', parameters('_globalResourceNameSuffix'))]",
+		"name_postDeploymentScriptRoleAssignmentTemplate": "postDeploymentUAMIRolesTemplate.json"
+	},
+	"resources": [
+		{
+		    "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+		    "apiVersion": "${azure.apiVersionForIdentity}",
+		    "tags": "[parameters('tagsByResource')['${identifier.userAssignedIdentities}']]",
+		    "name": "[variables('name_postDeploymentScriptUserDefinedManagedIdentity')]",
+		    "location": "[parameters('location')]"
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "${azure.apiVersionForDeployment}",
+			"name": "[variables('name_postDeploymentScriptRoleAssignment')]",
+			"scope": "[concat('/subscriptions/', subscription().subscriptionId)]",
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/', variables('name_postDeploymentTemplate')))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"const_roleDefinitionIdOfContributor": {
+					   "value": "[variables('const_roleDefinitionIdOfContributor')]"
+					},
+					"principalId":{
+						"value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('name_postDeploymentScriptUserDefinedManagedIdentity'))).principalId]"
+					}
+				}
+			}
+		}
+	],
+	"outputs": {
+		"uamidForPostDeployment": {
+		         "type": "string",
+		         "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity')).id]"
+		 }
+	}
+}
