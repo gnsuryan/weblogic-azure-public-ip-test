@@ -46,6 +46,7 @@
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "${azure.apiVersionForDeployment}",
 			"name": "[variables('name_postDeploymentScriptRoleAssignment')]",
+			"scope": "[subscription().id]",
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
