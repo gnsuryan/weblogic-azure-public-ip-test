@@ -46,8 +46,8 @@
 		      "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
 		   }
 		},
-		"identity":{
-			"type": "object",
+		"userAssignedIdentityResourceId":{
+			"type": "string",
 			"metadata": { 
 				"Description": "UserAssigned Identity"
 			}
@@ -64,7 +64,11 @@
 			"name": "[concat('postdeployscript-', parameters('_globalResourceNameSuffix'))]",
 			"kind": "AzureCLI",
 			"location": "[parameters('location')]",
-			"identity": "[parameters('identity')]",
+			"identity": {
+			       "type": "UserAssigned",
+			       "userAssignedIdentities": {
+			         "[parameters('userAssignedIdentityResourceId')]": {}
+			 },
 			"properties": {
 				"forceUpdateTag": "[parameters('utcValue')]",
 				"azCliVersion": "2.9.1",
@@ -86,5 +90,9 @@
 		}
     ],
     "outputs": {
+		"userAssignedIdentityResource": {
+		         "type": "string",
+		         "value": "[parameters('userAssignedIdentityResourceId')]"
+		 }
     }
 }
