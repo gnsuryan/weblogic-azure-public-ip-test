@@ -67,7 +67,8 @@
 			"identity": {
 			       "type": "UserAssigned",
 			       "userAssignedIdentities": {
-			         "[parameters('userAssignedIdentityResourceId')]": {}
+			        "[parameters('userAssignedIdentityResourceId')]": {}
+					}
 			 },
 			"properties": {
 				"forceUpdateTag": "[parameters('utcValue')]",
