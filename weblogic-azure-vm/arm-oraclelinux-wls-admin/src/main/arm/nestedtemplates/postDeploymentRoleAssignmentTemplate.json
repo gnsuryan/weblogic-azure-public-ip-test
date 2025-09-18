@@ -15,14 +15,11 @@
 		     }
 		  }
  	 },
-	 "variables": {
-		"name_roleAssignmentName" : "postDeploymentRoleAssignment"
-	 },
 	 "resources": [
 		{
 		    "type": "Microsoft.Authorization/roleAssignments",
 		    "apiVersion": "${azure.apiVersionForRoleAssignment}",
-		    "name": "[variables('name_roleAssignmentName')]",
+		    "name": "[newGuid()]",
 		    "properties": {
 		        "description": "Assign subscription scope role to User Assigned Managed Identity ",
 		        "principalId": "[parameters('principalId')]",
