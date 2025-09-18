@@ -32,7 +32,7 @@
 		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
 		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-identity', parameters('_globalResourceNameSuffix'))]",
 		"name_postDeploymentScriptRoleAssignment": "[concat('post-deployment-user-defined-role-assignment', parameters('_globalResourceNameSuffix'))]",
-		"name_postDeploymentScriptRoleAssignmentTemplate": "postDeploymentUAMIRolesTemplate.json"
+		"name_postDeploymentScriptRoleAssignmentTemplate": "postDeploymentRoleAssignmentTemplate.json"
 	},
 	"resources": [
 		{
@@ -50,7 +50,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/', variables('name_postDeploymentTemplate')))]",
+					"uri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/', variables('name_postDeploymentScriptRoleAssignmentTemplate')))]",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
