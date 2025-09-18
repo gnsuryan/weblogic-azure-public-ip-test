@@ -3,23 +3,23 @@
    "contentVersion": "1.0.0.0",
    "parameters": {
 		"location": {
-		   "type": "string",
-		   "metadata": {
-		      "description": "Location for all resources."
-		   },
-		   "_globalResourceNameSuffix": {
+		   	    "type": "string",
+			   "metadata": {
+			      "description": "Location for all resources."
+			   }
+		  },
+		  "_globalResourceNameSuffix": {
 		      "type": "string",
 		      "metadata": {
 		         "description": "A unique suffix that was specified during the deployment of the solution template."
-		      },
-			  "_artifactsLocation": {
+		    	}
+		   },
+		   "_artifactsLocation": {
 			     "type": "string",
 			     "metadata": {
 			        "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
 			     }
-			  }
 		   }
-		}
 	},
 	"variables": {
 		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
