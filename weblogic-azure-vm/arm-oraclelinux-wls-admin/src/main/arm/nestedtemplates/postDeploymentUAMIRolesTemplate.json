@@ -29,7 +29,7 @@
 		   },
 		   "roleAssignmentNameSeed": {
 		       "type": "string",
-		       "defaultValue": "[guid(subscription().id, parameters('principalId'), parameters('roleDefinitionId'))]",
+		       "defaultValue": "[guid(subscription().id, parameters('_globalResourceNameSuffix'))]",
 		       "metadata": {
 		           "description": "A unique string used to generate the role assignment name. Defaults to a unique GUID based on the deployment context."
 		       }
