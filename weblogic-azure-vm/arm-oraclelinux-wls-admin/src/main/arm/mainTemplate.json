@@ -849,6 +849,9 @@
 						},
 						"_artifactsLocation": {
 						   "value": "[parameters('_artifactsLocation')]"
+						},
+						"tagsByResource": {
+						   "value": "[variables('obj_tagsByResources')]"
 						}
 		  			}
 			}		
