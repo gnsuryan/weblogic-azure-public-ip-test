@@ -894,7 +894,7 @@
 				"_artifactsLocationSasToken": {
 				   "value": "[parameters('_artifactsLocationSasToken')]"
 				},
-				"identity":{
+				"userAssignedIdentityResourceId":{
 					"value": "[reference(variables('name_uamiForPostDeploymentScript'),'${azure.apiVersionForDeployment}').outputs.uamidForPostDeployment.value]"
 				}
 			}

@@ -80,7 +80,7 @@
 				"environmentVariables": [
 					{
 					    "name": "RESOURCE_GROUP_NAME",
-					    "value": "[resourceGroup().name]"
+					    "value": "[resourceGroup().name]"	
 					},
 					{
 						"name": "GUID_TAG",
