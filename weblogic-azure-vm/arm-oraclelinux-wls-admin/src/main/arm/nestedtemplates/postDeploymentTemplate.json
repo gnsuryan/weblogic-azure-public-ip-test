@@ -84,7 +84,7 @@
 		        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('name_postDeploymentScriptUserDefinedManagedIdentity'))).principalId]",
 				"principalType": "ServicePrincipal",
 		        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('const_roleDefinitionIdOfContributor'))]",
-				"scope": "[resourceGroup().id]"
+				"scope": "[subscription().id]"
 		    }
 		},
 		{
