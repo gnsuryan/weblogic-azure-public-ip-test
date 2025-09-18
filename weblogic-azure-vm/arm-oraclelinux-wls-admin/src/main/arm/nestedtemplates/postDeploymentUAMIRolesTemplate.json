@@ -26,17 +26,11 @@
 		      "metadata": {
 		         "description": "${label.tagsLabel}"
 		      }
-		   },
-		   "roleAssignmentNameSeed": {
-		       "type": "string",
-		       "defaultValue": "[guid(subscription().id, parameters('_globalResourceNameSuffix'))]",
-		       "metadata": {
-		           "description": "A unique string used to generate the role assignment name. Defaults to a unique GUID based on the deployment context."
-		       }
 		   }		   
 	},
 	"variables": {
 		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+		"roleAssignmentNameSeed" :"[concat('roleassignment' , variables('const_roleDefinitionIdOfContributor'))]",
 		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-identity', parameters('_globalResourceNameSuffix'))]",
 		"name_postDeploymentScriptRoleAssignment": "[concat('post-deployment-user-defined-role-assignment', parameters('_globalResourceNameSuffix'))]",
 		"name_postDeploymentScriptRoleAssignmentTemplate": "postDeploymentRoleAssignmentTemplate.json"
@@ -71,7 +65,6 @@
 			            },
 						"innerRoleAssignmentNameSeed": {
 							"type": "string",
-							"defaultValue": "[newGuid()]"
 						}						
 					},
 					"variables": {
@@ -81,7 +74,7 @@
 			            {
 			                "type": "Microsoft.Authorization/roleAssignments",
 			                "apiVersion": "2022-04-01",
-			                "name": "[parameters('innerRoleAssignmentNameSeed')]",
+			                "name": "[variables('roleAssignmentGuid')]",
 			                "properties": {
 			                    "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', parameters('innerRoleDefinitionId'))]",
 			                    "principalId": "[parameters('innerPrincipalId')]"
@@ -95,7 +88,10 @@
 			        },
 			        "innerRoleDefinitionId": {
 			            "value": "[variables('const_roleDefinitionIdOfContributor')]"
-			        }				
+			        },
+					"innerRoleAssignmentNameSeed": {
+						"value": "[variables('roleAssignmentNameSeed')]"
+					}				
 			    }
 			}		
 		}
