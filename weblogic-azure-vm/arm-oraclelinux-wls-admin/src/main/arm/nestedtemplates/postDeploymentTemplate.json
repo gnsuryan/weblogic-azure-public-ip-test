@@ -54,7 +54,6 @@
 		}
     },
     "variables": {
-		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-identity', parameters('_globalResourceNameSuffix'))]",
 		"name_postDeploymentscriptFile": "postDeploymentScript.sh"
     },
     "resources": [
@@ -63,9 +62,6 @@
 		    "apiVersion": "${azure.apiVersionForDeploymentScript}",
 			"tags": "[parameters('tagsByResource')['${identifier.deploymentScripts}']]",
 			"name": "[concat('postdeployscript-', parameters('_globalResourceNameSuffix'))]",
-			"dependsOn": [
-				"[resourceId('Microsoft.Authorization/roleAssignments', variables('name_roleAssignmentName'))]"
-			 ],
 			"kind": "AzureCLI",
 			"location": "[parameters('location')]",
 			"identity": "[parameters('identity')]",
@@ -77,10 +73,6 @@
 				"retentionInterval": "P1D",
 				"primaryScriptUri": "[uri(parameters('_artifactsLocationAdminTemplate'), concat('../scripts/', variables('name_postDeploymentscriptFile'), parameters('_artifactsLocationSasToken')))]",
 				"environmentVariables": [
-					{
-					    "name": "MANAGED_IDENTITY_ID",
-					    "value": "[variables('name_postDeploymentScriptUserDefinedManagedIdentity')]"
-					},
 					{
 					    "name": "RESOURCE_GROUP_NAME",
 					    "value": "[resourceGroup().name]"

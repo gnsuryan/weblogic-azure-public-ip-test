@@ -29,7 +29,7 @@
 		   },
 		   "roleAssignmentNameSeed": {
 		       "type": "string",
-		       "defaultValue": "roleassignment",
+		       "defaultValue": "[guid(subscription().id, parameters('_globalResourceNameSuffix'))]",
 		       "metadata": {
 		           "description": "A unique string used to generate the role assignment name. Defaults to a unique GUID based on the deployment context."
 		       }
@@ -37,7 +37,6 @@
 	},
 	"variables": {
 		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
-		
 		"name_postDeploymentScriptUserDefinedManagedIdentity": "[concat('post-deployment-user-defined-managed-identity', parameters('_globalResourceNameSuffix'))]",
 		"name_postDeploymentScriptRoleAssignment": "[concat('post-deployment-user-defined-role-assignment', parameters('_globalResourceNameSuffix'))]",
 		"name_postDeploymentScriptRoleAssignmentTemplate": "postDeploymentRoleAssignmentTemplate.json"
@@ -109,7 +108,7 @@
 	"outputs": {
 		"uamidForPostDeployment": {
 		         "type": "object",
-		         "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity')),'2023-01-31')]"
+		         "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity')))]"
 		 }
 	}
 }
