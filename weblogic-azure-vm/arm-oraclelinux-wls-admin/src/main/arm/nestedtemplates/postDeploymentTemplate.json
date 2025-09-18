@@ -51,7 +51,11 @@
 			"metadata": { 
 				"Description": "UserAssigned Identity"
 			}
-		}
+		},
+		"utcValue": {
+		  "type": "string",
+		  "defaultValue": "[utcNow()]"
+		}		
     },
     "variables": {
 		"name_postDeploymentscriptFile": "postDeploymentScript.sh"
