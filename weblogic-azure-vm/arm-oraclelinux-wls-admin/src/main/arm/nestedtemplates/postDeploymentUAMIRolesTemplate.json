@@ -65,8 +65,8 @@
 						"guidRoleValue": {
 						   "type": "string",
 						   "defaultValue": "[newGuid()]"
-						}
-			        },
+						}			        
+					},
 			        "resources": [
 			            {
 			                "type": "Microsoft.Authorization/roleAssignments",
