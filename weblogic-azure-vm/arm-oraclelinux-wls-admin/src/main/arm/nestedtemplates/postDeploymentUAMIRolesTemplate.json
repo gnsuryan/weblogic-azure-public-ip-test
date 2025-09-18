@@ -108,8 +108,8 @@
 	],
 	"outputs": {
 		"uamidForPostDeployment": {
-		         "type": "string",
-		         "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]"
+		         "type": "object",
+		         "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity')),'2023-01-31')]"
 		 }
 	}
 }
