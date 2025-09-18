@@ -65,6 +65,7 @@
 			            },
 						"innerRoleAssignmentNameSeed": {
 							"type": "string",
+							"defaultValue": "roleassign"
 						}						
 					},
 					"variables": {
@@ -88,10 +89,7 @@
 			        },
 			        "innerRoleDefinitionId": {
 			            "value": "[variables('const_roleDefinitionIdOfContributor')]"
-			        },
-					"innerRoleAssignmentNameSeed": {
-						"value": "[variables('roleAssignmentNameSeed')]"
-					}				
+			        }				
 			    }
 			}		
 		}
