@@ -26,7 +26,14 @@
 		      "metadata": {
 		         "description": "${label.tagsLabel}"
 		      }
-		   }
+		   },
+		   "roleAssignmentNameSeed": {
+		       "type": "string",
+		       "defaultValue": "[guid(subscription().id, parameters('principalId'), parameters('roleDefinitionId'))]",
+		       "metadata": {
+		           "description": "A unique string used to generate the role assignment name. Defaults to a unique GUID based on the deployment context."
+		       }
+		   }		   
 	},
 	"variables": {
 		"const_roleDefinitionIdOfContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
@@ -62,16 +69,18 @@
 			            "innerRoleDefinitionId": {
 			                "type": "string"
 			            },
-						"guidRoleValue": {
-						   "type": "string",
-						   "defaultValue": "[newGuid()]"
-						}			        
+						"innerRoleAssignmentNameSeed": {
+						    "type": "string"
+						}						
 					},
+					"variables": {
+					    "roleAssignmentGuid": "[guid(parameters('innerRoleAssignmentNameSeed'))]"
+					},					
 			        "resources": [
 			            {
 			                "type": "Microsoft.Authorization/roleAssignments",
 			                "apiVersion": "2022-04-01",
-			                "name": "[parameters('guidRoleValue')]",
+			                "name": "[variables('roleAssignmentGuid')]",
 			                "properties": {
 			                    "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', parameters('innerRoleDefinitionId'))]",
 			                    "principalId": "[parameters('innerPrincipalId')]"
@@ -85,7 +94,10 @@
 			        },
 			        "innerRoleDefinitionId": {
 			            "value": "[variables('const_roleDefinitionIdOfContributor')]"
-			        }
+			        },
+					"innerRoleAssignmentNameSeed": {
+					    "value": "[parameters('roleAssignmentNameSeed')]"
+					}					
 			    }
 			}		
 		}
