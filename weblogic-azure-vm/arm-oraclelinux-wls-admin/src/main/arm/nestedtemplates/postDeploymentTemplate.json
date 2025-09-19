@@ -83,6 +83,10 @@
 				"primaryScriptUri": "[uri(parameters('_artifactsLocationAdminTemplate'), concat('../scripts/', variables('name_postDeploymentscriptFile'), parameters('_artifactsLocationSasToken')))]",
 				"environmentVariables": [
 					{
+						"name": "MANAGED_IDENTITY_ID",
+						"value": "[parameters('userAssignedIdentityResourceId')]"
+					},
+					{
 					    "name": "RESOURCE_GROUP_NAME",
 					    "value": "[resourceGroup().name]"	
 					},

@@ -43,4 +43,4 @@ else
 	echo "No public IPs found with tag ${GUID_TAG}"
 fi
 echo "Deleting $MANAGED_IDENTITY_ID	"
-#az identity delete --name $MANAGED_IDENTITY_ID --resource-group ${RESOURCE_GROUP_NAME}
+az identity delete --ids $MANAGED_IDENTITY_ID
