@@ -86,7 +86,8 @@
 			                "properties": {
 			                    "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', parameters('innerRoleDefinitionId'))]",
 			                    "principalId": "[parameters('innerPrincipalId')]",
-								"principalType": "ServicePrincipal"
+								"principalType": "ServicePrincipal",
+								"scope": "[subscription().id]"
 			                }
 			            }
 			        ]
