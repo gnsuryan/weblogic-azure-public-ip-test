@@ -382,8 +382,7 @@
                }
          },
          "dependsOn": [
-            "[resourceId('Microsoft.Storage/storageAccounts', variables('name_storageAccount'))]",
-            "[resourceId('Microsoft.Network/virtualNetworks', variables('name_virtualNetwork'))]"
+            "[resourceId('Microsoft.Storage/storageAccounts', variables('name_storageAccount'))]"
          ]
       },
       {
