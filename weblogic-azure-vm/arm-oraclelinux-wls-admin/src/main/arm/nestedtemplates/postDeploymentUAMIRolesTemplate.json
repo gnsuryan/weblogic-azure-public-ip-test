@@ -109,6 +109,11 @@
 		"uamidForPostDeployment": {
 		         "type": "string",
 		         "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('name_postDeploymentScriptUserDefinedManagedIdentity'))]"
+		 },
+		 "postDeploymentScriptUserDefinedManagedIdentity": {
+			"type": "string",
+			"value": "[variables('name_postDeploymentScriptUserDefinedManagedIdentity')]"			
 		 }
+		 ""
 	}
 }
