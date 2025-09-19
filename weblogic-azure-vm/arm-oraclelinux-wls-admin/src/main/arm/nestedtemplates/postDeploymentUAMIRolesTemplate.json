@@ -72,7 +72,7 @@
 			                "type": "string"
 			            },
 						"innerRoleAssignmentNameSeed": {
-							"type": "string",
+							"type": "string"
 						}						
 					},
 					"variables": {
@@ -86,7 +86,7 @@
 			                "properties": {
 			                    "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', parameters('innerRoleDefinitionId'))]",
 			                    "principalId": "[parameters('innerPrincipalId')]",
-								"principalType": "ServicePrincipal",
+								"principalType": "ServicePrincipal"
 			                }
 			            }
 			        ]
@@ -114,6 +114,5 @@
 			"type": "string",
 			"value": "[variables('name_postDeploymentScriptUserDefinedManagedIdentity')]"			
 		 }
-		 ""
 	}
 }
