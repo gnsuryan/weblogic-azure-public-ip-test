@@ -1,0 +1,70 @@
+{
+  "_artifactsLocation": {
+    "value": "https://raw.githubusercontent.com/sanjaymantoor/weblogic-azure/refs/heads/main/weblogic-azure-vm/arm-oraclelinux-wls-admin/src/main/arm/"
+  },
+  "Location": {
+    "value": "eastus"
+  },
+  "adminPasswordOrKey": {
+    "value": "Weblogic5678"
+  },
+  "adminUsername": {
+    "value": "weblogic"
+  },
+  "authenticationType": {
+    "value": "password"
+  },
+  "addressPrefixes": {
+    "value": [
+      "172.16.0.0/28"
+    ]
+  },
+  "denyPublicTrafficForAdminServer": {
+    "value": false
+  },
+  "enableDB": {
+    "value": false
+  },
+  "enableCustomDNS": {
+    "value": false
+  },
+  "enablePswlessConnection": {
+    "value": false
+  },
+  "hasDNSZones": {
+    "value": false
+  },
+  "skuUrnVersion": {
+    "value": "owls-141200-jdk21-ol94;Oracle:weblogic-141200-jdk21-ol94:owls-141200-jdk21-ol94;latest"
+  },
+  "vmSize": {
+    "value": "Standard_B1ms"
+  },
+  "wlsPassword": {
+    "value": "Weblogic5678"
+  },
+  "wlsUserName": {
+    "value": "weblogic"
+  },
+  "enableCustomSSL": {
+    "value": false
+  },
+  "subnetName": {
+    "value": "Subnet-1"
+  },
+  "subnetPrefix": {
+    "value": "172.16.0.0/29"
+  },
+  "tagsByResource": {
+    "value": {}
+  },
+  "virtualNetworkName": {
+    "value": "wlsadmin-vnetd74c4bed"
+  },
+  "virtualNetworkResourceGroupName": {
+    "value": "guru-public-ip-latest-test"
+  },
+  "virtualNetworkNewOrExisting": {
+    "value": "new"
+  }
+}

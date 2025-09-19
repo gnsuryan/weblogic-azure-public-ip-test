@@ -22,7 +22,7 @@
 	 "resources": [
 		{
 		    "type": "Microsoft.Authorization/roleAssignments",
-		    "apiVersion": "${azure.apiVersionForRoleAssignment}",
+		    "apiVersion": "2022-04-01",
 		    "name": "[parameters('guidRoleValue')]",
 		    "properties": {
 		        "description": "Assign subscription scope role to User Assigned Managed Identity ",
